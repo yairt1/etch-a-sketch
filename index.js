@@ -12,3 +12,18 @@ function createGrid() {
 }
 
 createGrid();
+
+function randomColor() {
+  const MAX_COLOR = 256;
+  const randomValue = () => Math.floor(Math.random() * MAX_COLOR);
+
+  return `rgb(${randomValue()} ${randomValue()} ${randomValue()})`;
+}
+
+const squares = Array.from(document.querySelectorAll(".square"));
+
+container.addEventListener("mouseover", (event) => {
+  if (event.target !== container) {
+    event.target.style.backgroundColor = randomColor();
+  }
+});
