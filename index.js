@@ -17,17 +17,26 @@ function createGrid(grid = 16) {
   }
 }
 
-function randomColor() {
+function randomColor(opacity) {
   const MAX_COLOR = 256;
   const randomValue = () => Math.floor(Math.random() * MAX_COLOR);
 
-  return `rgb(${randomValue()} ${randomValue()} ${randomValue()})`;
+  return `rgba(${randomValue()}, ${randomValue()}, ${randomValue()}, ${opacity})`;
 }
 
 container.addEventListener("mouseover", (event) => {
-  if (event.target !== container) {
-    event.target.style.backgroundColor = randomColor();
+  const square = event.target;
+
+  if (!square.classList.contains("square")) {
+    return;
   }
+
+  let opacity = +square.dataset.opacity || 0;
+  opacity = Math.min(opacity + 0.1, 1);
+
+  square.dataset.opacity = opacity.toFixed(1);
+
+  square.style.backgroundColor = randomColor(opacity);
 });
 
 function resizeGrid() {
